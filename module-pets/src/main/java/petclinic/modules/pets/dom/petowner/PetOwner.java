@@ -124,13 +124,13 @@ public class PetOwner implements Comparable<PetOwner> {
 
     @PhoneNumber
     @Column(length = PhoneNumber.MAX_LEN, nullable = true)
-    @PropertyLayout(fieldSetId = "contactDetails", sequence = "1")
+//    @PropertyLayout(fieldSetId = "contactDetails", sequence = "1")
     @Getter @Setter
     private String phoneNumber;
 
     @EmailAddress
     @Column(length = EmailAddress.MAX_LEN, nullable = true)
-    @PropertyLayout(fieldSetId = "contactDetails", sequence = "2")
+//    @PropertyLayout(fieldSetId = "contactDetails", sequence = "2")
     @Getter @Setter
     private String emailAddress;
 
@@ -138,7 +138,7 @@ public class PetOwner implements Comparable<PetOwner> {
     @Column(length = Notes.MAX_LEN, nullable = true)
     @Getter @Setter
     @Property(commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
-    @PropertyLayout(fieldSetId = "notes", sequence = "1")
+//    @PropertyLayout(fieldSetId = "notes", sequence = "1")
     private String notes;
 
 
