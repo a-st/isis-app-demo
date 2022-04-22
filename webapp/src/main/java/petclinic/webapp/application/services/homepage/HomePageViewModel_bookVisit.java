@@ -13,6 +13,9 @@ import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.wrapper.WrapperFactory;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+
+import lombok.experimental.Accessors;
 
 import petclinic.modules.pets.dom.pet.Pet;
 import petclinic.modules.pets.dom.pet.PetRepository;
@@ -27,6 +30,15 @@ public class HomePageViewModel_bookVisit {
 
     final HomePageViewModel homePageViewModel;
 
+    @Value @Accessors(fluent = true)
+    public static class Parameters {
+        PetOwner petOwner;
+        Pet pet;
+        LocalDateTime visitAt;
+        String reason;
+        boolean showVisit;
+    }
+
     public Object act(PetOwner petOwner, Pet pet, LocalDateTime visitAt, String reason, boolean showVisit) {
         Visit visit = wrapperFactory.wrapMixin(Pet_bookVisit.class, pet).act(visitAt, reason);
         return showVisit ? visit : homePageViewModel;
@@ -38,18 +50,13 @@ public class HomePageViewModel_bookVisit {
         if(petOwner == null) return Collections.emptyList();
         return petRepository.findByPetOwner(petOwner);
     }
-    public LocalDateTime default2Act(PetOwner petOwner, Pet pet) {
-        if(pet == null) return null;
-        return factoryService.mixin(Pet_bookVisit.class, pet).default0Act();
+    public LocalDateTime default2Act(Parameters p) {
+        if(p.pet == null) return null;
+        return factoryService.mixin(Pet_bookVisit.class, p.pet).default0Act();
     }
-
-    // TODO: regression #2 - adding @Domain.Exclude didn't work, same error thrown.
-//    @Domain.Exclude // TODO - regression #1:
-//                    //  [ERROR] Failures:
-//                    //  [ERROR]   ValidateDomainModel_IntegTest.validate:18 petclinic.webapp.application.services.homepage.HomePageViewModel_bookVisit#validate2Act(petclinic.modules.pets.dom.petowner.PetOwner, petclinic.modules.pets.dom.pet.Pet, java.time.LocalDateTime): is public, but orphaned (was not picked up by the framework); reporting orphans, because the class is setup for member introspection, without enforcing annotations
-//    public String validate2Act(PetOwner petOwner, Pet pet, LocalDateTime visitAt){
-//         return factoryService.mixin(Pet_bookVisit.class, pet).validate0Act(visitAt);
-//    }
+    public String validate2Act(Parameters p){
+         return factoryService.mixin(Pet_bookVisit.class, p.pet).validate0Act(p.visitAt);
+    }
 
     @Inject PetRepository petRepository;
     @Inject PetOwnerRepository petOwnerRepository;
