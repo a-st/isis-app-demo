@@ -82,13 +82,15 @@ public class PetOwners {
     @Programmatic
     public void ping() {
         jpaSupportService.getEntityManager(PetOwner.class)
-            .ifSuccess(entityManager -> {
+            .mapSuccess(entityManager -> {
                 final TypedQuery<PetOwner> q = entityManager.createQuery(
                         "SELECT p FROM PetOwner p ORDER BY p.lastName",
                         PetOwner.class)
                     .setMaxResults(1);
                 q.getResultList();
-            });
+                return q;
+            })
+            .ifFailureFail();
     }
 
 

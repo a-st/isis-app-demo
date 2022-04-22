@@ -7,6 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.Domain;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.factory.FactoryService;
 import org.apache.isis.applib.services.wrapper.WrapperFactory;
 
@@ -40,9 +42,14 @@ public class HomePageViewModel_bookVisit {
         if(pet == null) return null;
         return factoryService.mixin(Pet_bookVisit.class, pet).default0Act();
     }
-    public String validate2Act(PetOwner petOwner, Pet pet, LocalDateTime visitAt){
-         return factoryService.mixin(Pet_bookVisit.class, pet).validate0Act(visitAt);
-    }
+
+    // TODO: regression #2 - adding @Domain.Exclude didn't work, same error thrown.
+//    @Domain.Exclude // TODO - regression #1:
+//                    //  [ERROR] Failures:
+//                    //  [ERROR]   ValidateDomainModel_IntegTest.validate:18 petclinic.webapp.application.services.homepage.HomePageViewModel_bookVisit#validate2Act(petclinic.modules.pets.dom.petowner.PetOwner, petclinic.modules.pets.dom.pet.Pet, java.time.LocalDateTime): is public, but orphaned (was not picked up by the framework); reporting orphans, because the class is setup for member introspection, without enforcing annotations
+//    public String validate2Act(PetOwner petOwner, Pet pet, LocalDateTime visitAt){
+//         return factoryService.mixin(Pet_bookVisit.class, pet).validate0Act(visitAt);
+//    }
 
     @Inject PetRepository petRepository;
     @Inject PetOwnerRepository petOwnerRepository;
