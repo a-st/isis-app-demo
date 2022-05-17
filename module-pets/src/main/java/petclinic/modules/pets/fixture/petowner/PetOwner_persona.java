@@ -13,7 +13,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum PetOwner_persona
-implements PersonaWithBuilderScript<PetOwnerBuilder>, PersonaWithFinder<PetOwner> {
+implements PersonaWithBuilderScript<PetOwner, PetOwnerBuilder>, PersonaWithFinder<PetOwner> {
 
     JONES("Jones"),
     FARRELL("Farrell"),
@@ -41,7 +41,7 @@ implements PersonaWithBuilderScript<PetOwnerBuilder>, PersonaWithFinder<PetOwner
     }
 
     public static class PersistAll
-    extends PersonaEnumPersistAll<PetOwner_persona, PetOwner> {
+    extends PersonaEnumPersistAll<PetOwner, PetOwner_persona, PetOwnerBuilder> {
 
         public PersistAll() {
             super(PetOwner_persona.class);

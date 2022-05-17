@@ -16,7 +16,7 @@ import petclinic.modules.pets.fixture.petowner.PetOwner_persona;
 
 @AllArgsConstructor
 public enum Pet_persona
-implements PersonaWithBuilderScript<PetBuilder>, PersonaWithFinder<Pet> {
+implements PersonaWithBuilderScript<Pet, PetBuilder>, PersonaWithFinder<Pet> {
 
     TIDDLES_JONES("Tiddles", PetSpecies.Cat, PetOwner_persona.JONES),
     ROVER_JONES("Rover", PetSpecies.Dog, PetOwner_persona.JONES),
@@ -46,7 +46,7 @@ implements PersonaWithBuilderScript<PetBuilder>, PersonaWithFinder<Pet> {
     }
 
     public static class PersistAll
-    extends PersonaEnumPersistAll<Pet_persona, Pet> {
+    extends PersonaEnumPersistAll<Pet, Pet_persona, PetBuilder> {
         public PersistAll() {
             super(Pet_persona.class);
         }
