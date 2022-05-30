@@ -10,6 +10,12 @@
                 <mb3:serviceAction objectType="pets.PetOwners" id="listAll"/>
             </mb3:section>
         </mb3:menu>
+        <mb3:menu>
+            <mb3:named>Assistant</mb3:named>
+            <mb3:section>
+                <mb3:serviceAction objectType="assistant.VisitAssistantMenu" id="open"></mb3:serviceAction>
+            </mb3:section>
+        </mb3:menu>
         <mb3:menu unreferencedActions="true">
             <mb3:named>Other</mb3:named>
         </mb3:menu>
